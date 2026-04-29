@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="controller.LoginController" alignment="CENTER" spacing="20" style="-fx-background-color: #222222; -fx-padding: 40;">
+    <Label text="XPLORE - LOGIN" style="-fx-text-fill: white; -fx-font-size: 32px; -fx-font-weight: bold;"/>
+
+    <VBox spacing="8" maxWidth="300">
+        <Label text="Username:" style="-fx-text-fill: #cccccc; -fx-font-size: 14px;"/>
+        <TextField fx:id="usernameField" promptText="Enter username" style="-fx-font-size: 14px; -fx-padding: 10;"/>
+    </VBox>
+
+    <VBox spacing="8" maxWidth="300">
+        <Label text="Password:" style="-fx-text-fill: #cccccc; -fx-font-size: 14px;"/>
+        <PasswordField fx:id="passwordField" promptText="Enter password" style="-fx-font-size: 14px; -fx-padding: 10;"/>
+    </VBox>
+
+    <VBox spacing="8" maxWidth="300" style="-fx-padding: 15 0 0 0;" alignment="CENTER">
+        <Label text="Locations to Visit:" style="-fx-text-fill: #3498db; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+        <TextField fx:id="routeField" promptText="e.g. ISBT, Clock Tower, FRI" style="-fx-font-size: 14px; -fx-padding: 10;"/>
+        <Label text="(Separate multiple places with commas)" style="-fx-text-fill: #aaaaaa; -fx-font-size: 11px;"/>
+    </VBox>
+
+    <Label fx:id="errorLabel" text="" style="-fx-text-fill: #e74c3c; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+    <HBox spacing="15" alignment="CENTER" style="-fx-padding: 10 0 0 0;">
+        <Button text="Login &amp; Start" onAction="#handleLogin" style="-fx-background-color: limegreen; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-padding: 10 20;"/>
+        <Button text="Register" onAction="#handleRegister" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-padding: 10 20;"/>
+    </HBox>
+</VBox>

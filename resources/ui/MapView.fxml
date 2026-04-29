@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.canvas.Canvas?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.MapController">
+
+    <center>
+        <StackPane>
+            <ImageView fx:id="mapImage" fitWidth="900" fitHeight="600"/>
+            <Canvas fx:id="markerCanvas" width="900" height="600"/>
+            <Canvas fx:id="fogCanvas" width="900" height="600"/>
+            <Canvas fx:id="playerCanvas" width="900" height="600"/>
+        </StackPane>
+    </center>
+
+    <right>
+        <VBox spacing="15" prefWidth="280" style="-fx-background-color: #1a1a1a; -fx-padding: 20; -fx-border-color: #333; -fx-border-width: 0 0 0 2;">
+            <Label text="Active Quests" style="-fx-text-fill: #f39c12; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent; -fx-control-inner-background: transparent;">
+                <VBox fx:id="questContainer" spacing="15" style="-fx-background-color: transparent;">
+                </VBox>
+            </ScrollPane>
+        </VBox>
+    </right>
+    <bottom>
+        <HBox spacing="20" style="-fx-padding: 15; -fx-background-color: #111111; -fx-alignment: center-left; -fx-border-color: #333; -fx-border-width: 2 0 0 0;">
+            <ProgressBar fx:id="progressBar" progress="0" prefWidth="400" style="-fx-accent: limegreen;"/>
+            <Label fx:id="progressLabel" text="Progress: 0.0%" style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Button text="Settings" style="-fx-font-size: 14px; -fx-background-color: #333; -fx-text-fill: white; -fx-padding: 8 20;"/>
+            <Button text="Pause" style="-fx-font-size: 14px; -fx-background-color: #e74c3c; -fx-text-fill: white; -fx-padding: 8 20;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
