@@ -7,7 +7,7 @@ public class PrintDB {
             System.out.println("\nACCOUNTS TABLE:");
             ResultSet rs1 = conn.createStatement().executeQuery("SELECT * FROM accounts");
             while (rs1.next()) {
-                System.out.println("Username: " + rs1.getString("username") + " | Password: " + rs1.getString("password"));
+                System.out.println("Username: " + rs1.getString("username"));
             }
 
             System.out.println("\nUSERS (PROGRESS) TABLE:");

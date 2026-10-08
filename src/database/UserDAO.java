@@ -9,7 +9,7 @@ public class UserDAO {
         try (Connection conn = DBConnection.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, username);
-            pstmt.setString(2, password);
+            pstmt.setString(2, PasswordHash.hash(password));
             pstmt.executeUpdate();
             return true;
         } catch (Exception e) {
@@ -18,13 +18,13 @@ public class UserDAO {
     }
 
     public static boolean login(String username, String password) {
-        String sql = "SELECT * FROM accounts WHERE username = ? AND password = ?";
+        String sql = "SELECT password FROM accounts WHERE username = ?";
         try (Connection conn = DBConnection.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            ResultSet rs = pstmt.executeQuery();
-            return rs.next();
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next() && PasswordHash.verify(password, rs.getString("password"));
+            }
         } catch (Exception e) {
             return false;
         }

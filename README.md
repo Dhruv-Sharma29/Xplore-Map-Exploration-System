@@ -72,8 +72,7 @@ Xplore1/
 │   │   └── MapView.fxml
 │   ├── map.png
 │   └── fog.png
-├── javafx-sdk-21.0.2/              # JavaFX runtime (not tracked in git)
-├── sqlite-jdbc.jar
+├── pom.xml                       # Maven-managed JavaFX and SQLite dependencies
 ├── run.bat                         # Windows launch script
 └── run.sh                          # Linux/macOS launch script
 ```
@@ -84,36 +83,16 @@ Xplore1/
 
 ### Prerequisites
 
-- Java 17 or higher
-- JavaFX SDK 21 ([Download here](https://gluonhq.com/products/javafx/))
+Java 17+ and Maven 3.9+. JavaFX and SQLite are downloaded by Maven; no SDK folders or committed JARs are needed.
 
-### Setup
-
-**1. Clone the repository:**
-
-```bash
+```sh
 git clone https://github.com/Dhruv-Sharma29/Xplore-Map-Exploration-System.git
 cd Xplore-Map-Exploration-System
+mvn test
+mvn javafx:run
 ```
 
-**2. Download JavaFX SDK 21** and place it in the project root as `javafx-sdk-21.0.2/`
-
-**3. Run the app:**
-
-_Windows:_
-
-```cmd
-run.bat
-```
-
-_Linux / macOS:_
-
-```bash
-chmod +x run.sh
-./run.sh
-```
-
-> The SQLite database (`explore.db`) is auto-created on first launch.
+The local SQLite database (`explore.db`) is created on first launch. New accounts store a random 16-byte salt and a versioned PBKDF2-HMAC-SHA256 hash (600,000 iterations). On initialization, legacy plaintext rows are migrated in one transaction before login is enabled. Back up an existing database before upgrading, and protect that backup because it may contain plaintext passwords. Login never falls back to a plaintext comparison.
 
 ---
 
@@ -124,7 +103,7 @@ chmod +x run.sh
 |UI|JavaFX 21 + FXML|
 |Backend|Java 17|
 |Database|SQLite via JDBC|
-|Build|Manual classpath (no Maven/Gradle)|
+|Build|Maven|
 
 ---
 
