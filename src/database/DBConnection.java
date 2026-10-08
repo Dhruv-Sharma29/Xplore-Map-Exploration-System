@@ -8,7 +8,7 @@ public class DBConnection {
 
     public static Connection connect() {
         try {
-            return DriverManager.getConnection("jdbc:sqlite:explore.db");
+            return DriverManager.getConnection(System.getProperty("xplore.database.url", "jdbc:sqlite:explore.db"));
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -39,8 +39,28 @@ public class DBConnection {
             stmt.execute(createZones);
             stmt.execute(createUsers);
             stmt.execute(createAccounts);
+            // Upgrade all legacy rows before the login screen accepts credentials.
+            // A transaction prevents a partially upgraded database on failure.
+            conn.setAutoCommit(false);
+            try (var select = conn.prepareStatement("SELECT username, password FROM accounts");
+                 var update = conn.prepareStatement("UPDATE accounts SET password = ? WHERE username = ?");
+                 var rows = select.executeQuery()) {
+                while (rows.next()) {
+                    String stored = rows.getString("password");
+                    if (!stored.startsWith(PasswordHash.PREFIX)) {
+                        update.setString(1, PasswordHash.hash(stored));
+                        update.setString(2, rows.getString("username"));
+                        update.addBatch();
+                    }
+                }
+                update.executeBatch();
+                conn.commit();
+            } catch (Exception e) {
+                conn.rollback();
+                throw e;
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new IllegalStateException("Database initialization failed", e);
         }
     }
 }
